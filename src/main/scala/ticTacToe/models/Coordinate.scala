@@ -2,7 +2,7 @@ package ticTacToe.models
 
 class Coordinate(row:Int, column:Int) {
 
-  private val row_ = row*2
+  private val row_ = row
 
   private val column_ = column
 
