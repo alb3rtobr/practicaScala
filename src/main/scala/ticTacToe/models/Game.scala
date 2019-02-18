@@ -1,5 +1,6 @@
 package ticTacToe.models
 
+
 class Game(turn: Turn = new Turn, board: Board = new Board()) {
 
   private val turn_ = turn
