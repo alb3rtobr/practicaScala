@@ -6,7 +6,6 @@ import ticTacToe.views.{GameView, GestorIO}
 
 abstract class Player2 extends Actor {
 
-
   def receive = {
 
     case Play(game) =>
@@ -33,30 +32,3 @@ abstract class Player2 extends Actor {
   def getAvailableCoordinate(game:Game):Coordinate
   def getBusyCoordinate(game:Game):Coordinate
 }
-
-class Player2Manual extends Player2 {
-  override def getAvailableCoordinate(game:Game):Coordinate = CoordinateView.read
-  override def getBusyCoordinate(game:Game):Coordinate = CoordinateView.read
-}
-
-class Player2Auto extends Player2 {
-  override def getAvailableCoordinate(game:Game): Coordinate = {
-    val coord = new Coordinate(scala.util.Random.nextInt(3), scala.util.Random.nextInt(3))
-    if (game.getColor(coord) == -1) {
-      coord
-    } else {
-      getAvailableCoordinate(game)
-    }
-  }
-
-  override def getBusyCoordinate(game:Game):Coordinate = {
-    val coord=new Coordinate(scala.util.Random.nextInt(3), scala.util.Random.nextInt(3))
-    if (game.getColor(coord) == 1){
-      coord
-    }else{
-      getBusyCoordinate(game)
-    }
-
-  }
-}
-

@@ -35,30 +35,33 @@ abstract class Player1(player2:ActorRef) extends Actor {
 
 
 
-class Player1Manual(player2:ActorRef) extends Player1(player2) {
+trait ManualPlayer {
 
-  override def getAvailableCoordinate(game:Game):Coordinate =
+  def getAvailableCoordinate(game:Game):Coordinate =
     CoordinateView.read
 
-  override def getBusyCoordinate(game:Game):Coordinate =
+  def getBusyCoordinate(game:Game):Coordinate =
     CoordinateView.read
 }
 
 
 
-class Player1Auto(player2:ActorRef) extends Player1(player2) {
-  override def getAvailableCoordinate(game:Game): Coordinate = {
+trait AutomaticPlayer{
+  val playerColor:Integer = -2
+  val emptyColor:Integer = -1
+
+  def getAvailableCoordinate(game:Game): Coordinate = {
     val coord = new Coordinate(scala.util.Random.nextInt(3), scala.util.Random.nextInt(3))
-    if (game.getColor(coord) == -1) {
+    if (game.getColor(coord) == emptyColor) {
       coord
     } else {
       getAvailableCoordinate(game)
     }
   }
 
-  override def getBusyCoordinate(game:Game):Coordinate = {
+  def getBusyCoordinate(game:Game):Coordinate = {
     val coord=new Coordinate(scala.util.Random.nextInt(3), scala.util.Random.nextInt(3))
-    if (game.getColor(coord) == 0){
+    if (game.getColor(coord) == playerColor){
       coord
     }else{
       getBusyCoordinate(game)
@@ -66,3 +69,13 @@ class Player1Auto(player2:ActorRef) extends Player1(player2) {
 
   }
 }
+
+trait AutomaticPlayer1 extends AutomaticPlayer{
+  override val playerColor:Integer = 0
+}
+
+trait AutomaticPlayer2 extends AutomaticPlayer{
+  override val playerColor:Integer = 1
+}
+
+
